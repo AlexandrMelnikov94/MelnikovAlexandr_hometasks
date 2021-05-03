@@ -1,18 +1,18 @@
 do {
-    var lastName = prompt("Введите вашу фамилию", '');
-} while (lastName === '');
+    var lastName = prompt('Введите вашу фамилию', '');
+} while (lastName === '' || lastName === null || lastName.match(/\d/) || lastName.match(' '));
 
 do {
     var firstName = prompt('Введите вашe имя:', '');
-} while (firstName === '');
+} while (firstName === '' || firstName === null || firstName.match(/\d/) || firstName.match(' '));
 
 do {
     var secondName = prompt('Введите ваше отчество:', '');
-} while (secondName === '');
+} while (secondName === '' || secondName === null || secondName.match(/\d/) || secondName.match(' '));
 
 do {
     var fullYears = parseInt(prompt('Сколько вам лет:', ''), 10);
-} while (isNaN(fullYears));
+} while (isNaN(fullYears) || fullYears > 100);
 
 var gender = confirm('Ваш пол - мужской?');
 var pension = false;

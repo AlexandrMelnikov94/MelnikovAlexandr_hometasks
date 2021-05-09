@@ -15,8 +15,8 @@ showKeys(image);
 
 //After
 function multiplyNumeric(image) {
-    for(var key in image) {
-        if(typeof image[key] == 'number') {
+    for (var key in image) {
+        if (typeof image[key] == 'number') {
             image[key] *= 2;
         }
         alert('Ключ: ' + key + ', значение: ' + image[key])

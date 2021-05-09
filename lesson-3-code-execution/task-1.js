@@ -14,4 +14,3 @@ function whoCompleteMoreTasks(obj, n) {
 }
 
 alert(whoCompleteMoreTasks(tasksCompleted, 1))
-

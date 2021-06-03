@@ -54,7 +54,7 @@
 
     Question.prototype.displayScore = function (score) {
     }
-    
+
     function repeatQuestion() {
         var n = Math.floor(Math.random() * questions.length);
         questions[n].displayQuestion();

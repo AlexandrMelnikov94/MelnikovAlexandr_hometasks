@@ -9,9 +9,8 @@ var fieldsOfFrom = [
         label: 'Рубрика каталога:',
         type: 'select',
         name: 'catalog',
-        selection: [{longtext: 'здоровье', value: 1}, {text: 'домашний уют', value: 2}, {
-            text: 'бытовая техника',
-            value: 3
+        selection: [{longtext: 'здоровье'}, {text: 'домашний уют'}, {
+            text: 'бытовая техника'
         }]
     },
     {
@@ -39,6 +38,7 @@ function createForm() {
                 label.appendChild(showName);
                 var dev = document.createElement('input');
                 label.appendChild(dev);
+                dev.setAttribute('style', 'margin-left :49.5px');
             }
             if (fieldsOfFrom[i][j] === 'Название сайта:') {
                 label = document.createElement('label');
@@ -49,6 +49,7 @@ function createForm() {
                 label.appendChild(showName);
                 var siteName = document.createElement('input');
                 label.appendChild(siteName);
+                siteName.setAttribute('style', 'margin-left :38px');
             }
             if (fieldsOfFrom[i][j] === 'URL сайта:') {
                 label = document.createElement('label');
@@ -59,6 +60,8 @@ function createForm() {
                 label.appendChild(showName);
                 var url = document.createElement('input');
                 label.appendChild(url);
+                url.setAttribute('style', 'margin-left :70px');
+
             }
             if (fieldsOfFrom[i][j] === 'Дата запуска:') {
                 label = document.createElement('label');
@@ -69,6 +72,8 @@ function createForm() {
                 label.appendChild(showName);
                 var startProject = document.createElement('input');
                 label.appendChild(startProject);
+                startProject.setAttribute('style', 'margin-left :55px');
+
             }
             if (fieldsOfFrom[i][j] === 'Посетителей в сутки:') {
                 label = document.createElement('label');
@@ -79,6 +84,8 @@ function createForm() {
                 label.appendChild(showName);
                 var visitorsPerDay = document.createElement('input');
                 label.appendChild(visitorsPerDay);
+                visitorsPerDay.setAttribute('style', 'margin-left :1px');
+
             }
             if (fieldsOfFrom[i][j] === 'E-mail для связки:') {
                 label = document.createElement('label');
@@ -89,6 +96,7 @@ function createForm() {
                 label.appendChild(showName);
                 var email = document.createElement('input');
                 label.appendChild(email);
+                email.setAttribute('style', 'margin-left :23px');
             }
             if (fieldsOfFrom[i][j] === 'Рубрика каталога:') {
                 label = document.createElement('label');
@@ -124,6 +132,7 @@ function createForm() {
                         }
                     }
                 }
+                catalog.setAttribute('style', 'margin-left :24.5px');
             }
 
             if (fieldsOfFrom[i][j] === 'Размещение:') {
@@ -144,6 +153,7 @@ function createForm() {
                                 label.appendChild(radioButton);
                                 var free = document.createTextNode('бесплатное');
                                 label.appendChild(free);
+                                radioButton.setAttribute('style', 'margin-left :59px');
                             }
                             if (fieldsOfFrom[i].selection[l][k] === 'платное') {
                                 radioButton = document.createElement('input');
@@ -164,6 +174,7 @@ function createForm() {
                         }
                     }
                 }
+
             }
             if (fieldsOfFrom[i][j] === 'Разрешить отзывы:') {
                 label = document.createElement('label');
@@ -172,9 +183,10 @@ function createForm() {
                 form.appendChild(br);
                 showName = document.createTextNode('Разрешить отзывы:');
                 label.appendChild(showName);
-                var AllowReviews = document.createElement('input');
-                AllowReviews.setAttribute('type', 'checkbox');
-                label.appendChild(AllowReviews);
+                var allowReviews = document.createElement('input');
+                allowReviews.setAttribute('type', 'checkbox');
+                label.appendChild(allowReviews);
+                allowReviews.setAttribute('style', 'margin-left :15px');
             }
 
             if (fieldsOfFrom[i][j] === 'Описание сайта:') {
@@ -187,6 +199,7 @@ function createForm() {
                 label.appendChild(br);
                 var siteDescribe = document.createElement('textarea');
                 label.appendChild(siteDescribe);
+                siteDescribe.setAttribute('style', 'width  :313px');
             }
 
             if (fieldsOfFrom[i][j] === 'Опубликовать') {

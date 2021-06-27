@@ -2,15 +2,21 @@
   var canvas = document.getElementById('wrapper');
   var context = canvas.getContext('2d');
   context.translate(250, 250);
+  var clockWidth = 10;
+  var clockRadius = 150;
+  var secondArrowLength = 120;
+  var minArrowLength = 110;
+  var hourArrowLength = 90;
 
   var radius = 300;
+  var littleRadius = 3;
   var radiusNumberCircle = 20;
 
   setInterval(createClock, 1000);
 
   // createClock();
   function createClock() {
-    context.clearRect(-250, -250, 500, 500);
+    context.clearRect(-250, -250, 600, 600);
     createClockFaceCircles();
     createMainCircle();
     createDigitalCLock();
@@ -21,9 +27,9 @@
   //clock
   function createMainCircle() {
     context.strokeStyle = 'lightgrey';
-    context.lineWidth = 10;
+    context.lineWidth = clockWidth;
     context.beginPath();
-    context.arc(0, 0, 150, 0, Math.PI * 2, false);
+    context.arc(0, 0, clockRadius, 0, Math.PI * 2, false);
     context.stroke();
   }
 
@@ -35,7 +41,7 @@
     context.lineWidth = 3;
     context.moveTo(0, 0);
     context.rotate(deg);
-    context.lineTo(0, -120);
+    context.lineTo(0, -secondArrowLength);
     context.stroke();
     context.rotate(-deg);
     context.restore();
@@ -49,7 +55,7 @@
     context.lineWidth = 5;
     context.moveTo(0, 0);
     context.rotate(deg);
-    context.lineTo(0, -110);
+    context.lineTo(0, -minArrowLength);
     context.stroke();
     context.rotate(-deg);
     context.restore();
@@ -63,7 +69,7 @@
     context.lineWidth = 7;
     context.moveTo(0, 0);
     context.rotate(deg);
-    context.lineTo(0, -90);
+    context.lineTo(0, -hourArrowLength);
     context.stroke();
     context.rotate(-deg);
     context.restore();
@@ -74,7 +80,7 @@
     context.strokeStyle = 'black';
     context.fillStyle = 'black';
     context.beginPath();
-    context.arc(0, 0, 3, 0, Math.PI * 2, false);
+    context.arc(0, 0, littleRadius, 0, Math.PI * 2, false);
     context.fill();
     context.stroke();
   }

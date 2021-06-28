@@ -2,15 +2,13 @@
   var canvas = document.getElementById('wrapper');
   var context = canvas.getContext('2d');
   context.translate(250, 250);
-  var clockWidth = 10;
-  var clockRadius = 150;
-  var secondArrowLength = 120;
-  var minArrowLength = 110;
-  var hourArrowLength = 90;
-
-  var radius = 300;
-  var littleRadius = 3;
-  var radiusNumberCircle = 20;
+  var clockWidth = 10; // ширина внешнего круга часов
+  var clockRadius = 150; // радиус часов
+  var secondArrowLength = 120; // длина секндной стрелки
+  var minArrowLength = 110; // длина минутной стелки
+  var hourArrowLength = 90; // длинна часовой стелки
+  var littleRadius = 3; // радиус кружка по центру часов
+  var radiusNumberCircle = 20; // радиус кружков цифр
 
   setInterval(createClock, 1000);
 
@@ -89,7 +87,7 @@
   function createClockFaceCircles() {
     for (var i = 1; i <= 12; i++) {
       var degrees = (30 * i) / 180 * Math.PI;
-      var innerRadius = radius / 2 - radiusNumberCircle * 1.5;
+      var innerRadius = clockRadius - radiusNumberCircle * 1.5;
       var numberCircleX = innerRadius * Math.sin(degrees);
       var numberCircleY = -innerRadius * Math.cos(degrees);
       context.strokeStyle = 'lightgrey';

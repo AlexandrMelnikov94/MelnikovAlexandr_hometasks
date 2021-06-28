@@ -1,6 +1,6 @@
 (function () {
-  var radius = 300;
-  var radiusNumberCircle = 20;
+  var radius = 150; // радиус часов
+  var radiusNumberCircle = 20; // радиус кружков цифр
 
   var clock = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   clock.setAttribute('width', 600);
@@ -21,9 +21,9 @@
       var numbers = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       var group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       var degrees = (30 * i) / 180 * Math.PI;
-      var innerRadius = radius / 2 - radiusNumberCircle * 1.5;
-      var numberCircleX = radius / 2 + innerRadius * Math.sin(degrees) + 100;
-      var numberCircleY = radius / 2 - innerRadius * Math.cos(degrees) + 100;
+      var innerRadius = radius - radiusNumberCircle * 1.5;
+      var numberCircleX = radius + innerRadius * Math.sin(degrees) + 100;
+      var numberCircleY = radius - innerRadius * Math.cos(degrees) + 100;
       numberCircle.setAttribute('cx', Math.round(numberCircleX));
       numberCircle.setAttribute('cy', Math.round(numberCircleY));
       numberCircle.setAttribute('r', radiusNumberCircle);
@@ -116,6 +116,5 @@
   }
 
   updateTime();
-
   setInterval(updateTime, 1000);
 })();

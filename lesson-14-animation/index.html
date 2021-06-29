@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tennis</title>
+</head>
+<body>
+  <div class="wrapper"
+       style="height: 90vh; width: 100%;">
+    <div id="info"
+         style="width: 50%;
+         margin: 0 50%;
+         font-size: 30px;
+">
+      <button id='start'
+              style="margin-left: -3px"
+              onclick='Start()'>Start
+      </button>
+      <button id ='Move' onclick="leftRocket(500)">Move</button>
+      <div id='score'>0:0</div>
+    </div>
+    <div id="field"
+         style="width: 1000px; height: 700px;
+         margin: 0 auto;
+         border: 1px solid black;
+         position: relative;
+         background-color: lightyellow;">
+      <div id="ball"
+           style="height: 50px;
+           width: 50px;
+           border: 1px solid black;
+           border-radius: 50%;
+           background-color: red;
+           position: absolute">
+      </div>
+      <div id='left-player'
+           style="width: 10px;
+           height: 150px;
+           background-color: blue;
+           position: absolute">
+      </div>
+      <div id='right-player'
+           style="width: 10px;
+           height: 150px;
+           background-color: green;
+           position: absolute;
+           right: 0;">
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

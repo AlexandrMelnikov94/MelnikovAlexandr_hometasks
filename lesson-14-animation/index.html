@@ -3,48 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Tennis</title>
+  <link rel="stylesheet"
+        href="style.css">
 </head>
 <body>
-  <div class="wrapper"
-       style="height: 90vh; width: 100%;">
-    <div id="info"
-         style="width: 50%;
-         margin: 0 50%;
-         font-size: 30px;
-">
-      <button id='start'
-              style="margin-left: -3px"
-              onclick='Start()'>Start
+  <div class="wrapper">
+    <div id="info">
+      <button id='start'>Start
       </button>
-      <button id ='Move' onclick="leftRocket(500)">Move</button>
+      <button id ='Move'>Move</button>
       <div id='score'>0:0</div>
     </div>
-    <div id="field"
-         style="width: 1000px; height: 700px;
-         margin: 0 auto;
-         border: 1px solid black;
-         position: relative;
-         background-color: lightyellow;">
-      <div id="ball"
-           style="height: 50px;
-           width: 50px;
-           border: 1px solid black;
-           border-radius: 50%;
-           background-color: red;
-           position: absolute">
+    <div id="field">
+      <div id="ball">
       </div>
-      <div id='left-player'
-           style="width: 10px;
-           height: 150px;
-           background-color: blue;
-           position: absolute">
+      <div id='left-player'>
       </div>
-      <div id='right-player'
-           style="width: 10px;
-           height: 150px;
-           background-color: green;
-           position: absolute;
-           right: 0;">
+      <div id='right-player'>
       </div>
     </div>
   </div>

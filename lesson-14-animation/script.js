@@ -1,15 +1,16 @@
 (function () {
-  var fieldWidth = 1000;
-  var fieldHeight = 700;
-  var ballWidth = 50;
-  var ballHeight = 50;
-  var rocketHeight = 150;
-  var rocketWidth = 10;
+  var fieldWidth = 1000;//ширина поля
+  var fieldHeight = 700;//высота поля
+  var ballWidth = 50;//ширина мяча
+  var ballHeight = 50;//высота мяча
+  var rocketHeight = 150;//высота рокетки
+  var rocketWidth = 10;//ширина рокетки
 
   var startButton = document.getElementById('start');
   var leftPlayer = document.getElementById('left-player');
   var rightPlayer = document.getElementById('right-player');
   var ball = document.getElementById('ball');
+  var playerScore = document.getElementById('score');
 
   var leftPlayerRocket = new Player(leftPlayer);
   var rightPlayerRocket = new Player(rightPlayer);
@@ -28,10 +29,11 @@
 
 // РОКЕТКА -----------------------------------------------------------------------------------------------------------
   function Player(player) {
-    this.speedY = 0;
+    this.score = 0;
+    this.speedRocketY = 0;
     player.style.top = fieldHeight / 2 - rocketHeight / 2 + 'px';
     this.Update = function () {
-      player.style.top = player.offsetTop + this.speedY + 'px';
+      player.style.top = player.offsetTop + this.speedRocketY + 'px';
       if (player.offsetTop <= 0) {
         player.style.top = '0px';
       } else if (player.offsetTop >= fieldHeight - rocketHeight) {
@@ -42,30 +44,28 @@
 
   function moveRocket(e) {
     if (e.keyCode === 16) {
-      leftPlayerRocket.speedY = -5;
+      leftPlayerRocket.speedRocketY = -10;
     }
     if (e.keyCode === 17) {
-      leftPlayerRocket.speedY = 5;
+      leftPlayerRocket.speedRocketY = 10;
     }
     if (e.keyCode === 38) {
-      rightPlayerRocket.speedY = -5;
+      rightPlayerRocket.speedRocketY = -10;
     }
     if (e.keyCode === 40) {
-      rightPlayerRocket.speedY = 5;
+      rightPlayerRocket.speedRocketY = 10;
     }
   }
 
   function stopMoveRocket() {
-    leftPlayerRocket.speedY = 0;
-    rightPlayerRocket.speedY = 0;
+    leftPlayerRocket.speedRocketY = 0;
+    rightPlayerRocket.speedRocketY = 0;
   }
 
 //МЯЧИК --------------------------------------------------------------------------------------------------------------
   function Ball(ball) {
     ball.style.left = fieldWidth / 2 - ballWidth / 2 + 'px';
     ball.style.top = fieldHeight / 2 - ballHeight / 2 + 'px';
-    this.speedX = ((Math.floor(Math.random() * (1 - (-1) + 1)) + (-1)) * 3) + 6;
-    this.speedY = ((Math.floor(Math.random() * (1 - (-1) + 1)) + (-1)) * 3) + 4;
 
     this.Update = function () {
       ball.style.left = ball.offsetLeft + this.speedX + 'px';
@@ -82,32 +82,62 @@
     }
 
     this.touchLeftRight = function () {
-      // if (ball.offsetLeft + ballWidth + 5 > Area.Width ) {
-      //   this.speedX = - this.speedX;
-      // }
-      // if (ball.offsetLeft < 0) {
-      //   ball.style.left = '0px';
-      //   this.speedX = -this.speedX;
-      // }
+      if (ball.offsetLeft + ballWidth + 3 > Area.Width) {
+        if (!!this.speedX || !!this.speedY) {
+          this.speedX = 0;
+          this.speedY = 0;
+          leftPlayerRocket.score++;
+          playerScore.textContent = leftPlayerRocket.score + ':' + rightPlayerRocket.score;
+        }
+      }
+      if (ball.offsetLeft < 0) {
+        if (!!this.speedX || !!this.speedY) {
+          this.speedX = 0;
+          this.speedY = 0;
+          rightPlayerRocket.score++;
+          playerScore.textContent = leftPlayerRocket.score + ':' + rightPlayerRocket.score;
+        }
+      }
     }
 
     this.meetWithRocket = function () {
-      if (ball.offsetLeft + rocketWidth + ballWidth > Area.Width) {
+      if (ball.offsetLeft + rocketWidth + ballWidth + 3 > Area.Width) {
         if (ball.offsetTop + ballWidth > rightPlayer.offsetTop) {
           if (ball.offsetTop + ballWidth < rightPlayer.offsetTop + rocketHeight) {
-            console.log('Touch');
             this.speedX = -this.speedX;
+
           }
         }
       }
       if (ball.offsetLeft - rocketWidth < 0) {
-        if (ball.offsetTop + ballWidth > leftPlayer.offsetTop){
+        if (ball.offsetTop + ballWidth > leftPlayer.offsetTop) {
           if (ball.offsetTop + ballWidth < leftPlayer.offsetTop + rocketHeight) {
-            console.log('Touch2');
             this.speedX = -this.speedX;
           }
         }
       }
+    }
+
+    this.startBallPosition = function () {
+      ball.style.left = fieldWidth / 2 - ballWidth / 2 + 'px';
+      ball.style.top = fieldHeight / 2 - ballHeight / 2 + 'px';
+    }
+
+    this.startBallMove = function () {
+      var randomNumber = Math.random();
+      if (randomNumber > 0.5) {
+        this.speedX = ((Math.floor(Math.random() * (1 - (-1) + 1)) + (-1)) * 3) + 6;
+        this.speedY = ((Math.floor(Math.random() * (1 - (-1) + 1)) + (-1)) * 3) + 4;
+      }
+      if (randomNumber <= 0.5) {
+        this.speedX = ((Math.floor(Math.random() * (1 - (-1) + 1)) + (-1)) * 3) - 6;
+        this.speedY = ((Math.floor(Math.random() * (1 - (-1) + 1)) + (-1)) * 3) - 4;
+      }
+
+    }
+    this.UpdateSpeed = function () {
+      this.speedX = 0;
+      this.speedY = 0;
     }
   }
 
@@ -121,19 +151,25 @@
   // ФУНКЦИОНАЛ ----------------------------------------------------------------------------------------------------
   function Start() {
     newBall.Update();
-    leftPlayerRocket.Update();
-    rightPlayerRocket.Update();
     newBall.touchTopDown();
     newBall.touchLeftRight();
-    newBall.meetWithRocket(rightPlayerRocket);
+    newBall.meetWithRocket();
+    leftPlayerRocket.Update();
+    rightPlayerRocket.Update();
     RequestAnimationFrame(Start);
+  }
+
+  function StartBall() {
+    newBall.startBallMove();
+    newBall.startBallPosition();
   }
 
   function initGame() {
     RequestAnimationFrame(Start);
   }
 
-  startButton.onclick = initGame;
+  window.onload = initGame;
+  startButton.onclick = StartBall;
   window.onkeydown = moveRocket;
   window.onkeyup = stopMoveRocket;
 }());

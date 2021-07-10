@@ -1,10 +1,181 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Homework</title>
+  <style>
+    body {
+      margin: 2em auto;
+      width: 90%;
+      font-family: "Open Sans", serif;
+      font-size: 0.8em;
+    }
+    .manage-drinks > * {
+      display: block;
+    }
+    .manage-drinks .drink-info {
+      margin: 0.5em auto;
+      width: 95%;
+      max-width: 320px;
+      color: black;
+    }
+    input {
+      margin: 0.5em auto;
+      padding: 0.5em 1em;
+      width: 95%;
+      max-width: 320px;
+      border: 1px solid slategrey;
+      color: white;
+      background: darkslategray;
+      cursor: pointer;
+    }
+    input:hover {
+      color: #eee;
+    }
+  </style>
 </head>
 <body>
-$END$
+  <div class="manage-drinks">
+    <input type='button' value='Добавить напиток' onclick='addDrink()'>
+    <input type='button' value='Показать информацию о напитке' onclick='showDrinkInfo()'>
+    <input type='button' value='Удалить напиток' onclick='removeDrink()'>
+    <input type='button' value='Показать меню напитков' onclick='showDrinksMenu()'>
+    <div id="message1" class="drink-info"></div>
+  </div>
+  <br>
+  <div class="manage-drinks">
+    <input type='button' value='Добавить блюдо' onclick='addDish()'>
+    <input type='button' value='Показать информацию о блюде' onclick='showDishInfo()'>
+    <input type='button' value='Удалить блюдо' onclick='removeDishes()'>
+    <input type='button' value='Показать меню' onclick='showDishesMenu()'>
+    <div id="message2" class="drink-info"></div>
+  </div>
+  <script src="localstorage.js"></script>
+  <script>
+    'use strict';
+    var dishStorage = new TLocalStorage('dishes');
+    var drinkStorage = new TLocalStorage('drinks');
+//-------------------Напитки-------------------------------------
+    function addDrink() {
+      var drinkName = prompt('Введите название напитка', 'Test Drink').toLowerCase().trim();
+      var lsHash = {};
+
+      if (drinkName) {
+        lsHash.recipe = prompt('Введите рецепт приготовления напитка', 'Test Recipe');
+        lsHash.alcohol = confirm('Ваш напиток алкогольный?') ? 'да' : 'нет';
+        drinkStorage.addValue(drinkName, lsHash);
+        drinkStorage.store();
+      } else {
+        alert('Ввод отменен!')
+      }
+    }
+
+    function showDrinkInfo() {
+      var drinkName = prompt('Введите название напитка: ','').toLowerCase().trim();
+      var getDrinkInfo = (drinkName) ? drinkStorage.getValue(drinkName) : 0;
+      var resultHTML = '';
+
+      if (getDrinkInfo) {
+        var print1 = 'Напиток: ' + drinkName + '<br>';
+        var print2 = 'Алкогольный: ' + getDrinkInfo.alcohol + '<br>';
+        var print3 = 'Рецепт приготовления: ' + getDrinkInfo.recipe + '<br>';
+
+        resultHTML = print1 + print2 + print3;
+      } else {
+        resultHTML = 'Ошибка! Нет такого напитка';
+      }
+      document.getElementById('message1').innerHTML = resultHTML;
+    }
+
+    function removeDrink() {
+      var drinkName = prompt('Какой напиток удалить?').toLowerCase().trim();
+      var delDrinkInfo = drinkStorage.deleteValue(drinkName);
+      var resultHTML = '';
+
+      if (delDrinkInfo) {
+        resultHTML = 'Информация о напитке ' + drinkName + ' удалена';
+      } else {
+        resultHTML = 'Ошибка! Нет такого напитка';
+      }
+      document.getElementById('message1').innerHTML = resultHTML;
+    }
+
+    function showDrinksMenu() {
+      var showMenuInfo = drinkStorage.getKeys();
+      var resultHTML = '';
+
+      if (showMenuInfo.length) {
+        for (var i = 0; i < showMenuInfo.length; i++) {
+          resultHTML += (i + 1) + '. ' + showMenuInfo[i] + '<br>';
+        }
+      } else {
+        resultHTML = 'Меню пустое, добавьте напитки.';
+      }
+      document.getElementById('message1').innerHTML = resultHTML;
+    }
+    //-------------------Блюдо-------------------------------------
+
+    function addDish() {
+      var dishName = prompt('Введите название блюда', 'Test Dish').toLowerCase().trim();
+      var lsHash = {};
+
+      if (dishName) {
+        lsHash.recipe = prompt('Введите рецепт приготовления блюда', 'Test Recipe');
+        lsHash.eating = confirm('Ваше блюдо можно есть?') ? 'да' : 'нет';
+        dishStorage.addValue(dishName, lsHash);
+        dishStorage.store();
+      } else {
+        alert('Ввод отменен!')
+      }
+    }
+
+    function showDishInfo() {
+      var dishName = prompt('Введите название блюда: ','').toLowerCase().trim();
+      var getDishInfo = (dishName) ? dishStorage.getValue(dishName) : 0;
+      var resultHTML = '';
+
+      if (getDishInfo) {
+        var print1 = 'Блюдо: ' + dishName + '<br>';
+        var print2 = 'Съедобное: ' + getDishInfo.eating + '<br>';
+        var print3 = 'Рецепт приготовления: ' + getDishInfo.recipe + '<br>';
+
+        resultHTML = print1 + print2 + print3;
+      } else {
+        resultHTML = 'Ошибка! Нет такого напитка';
+      }
+      document.getElementById('message2').innerHTML = resultHTML;
+    }
+
+    function removeDishes() {
+      var dishName = prompt('Какое блюдо удалить?').toLowerCase().trim();
+      var delDishInfo = dishStorage.deleteValue(dishName);
+      var resultHTML = '';
+
+      if (delDishInfo) {
+        resultHTML = 'Информация о блюде ' + dishName + ' удалена';
+      } else {
+        resultHTML = 'Ошибка! Нет такого блюда';
+      }
+      document.getElementById('message2').innerHTML = resultHTML;
+    }
+
+    function showDishesMenu() {
+      var showDishInfo = dishStorage.getKeys();
+      var resultHTML = '';
+
+      if (showDishInfo.length) {
+        for (var i = 0; i < showDishInfo.length; i++) {
+          resultHTML += (i + 1) + '. ' + showDishInfo[i] + '<br>';
+        }
+      } else {
+        resultHTML = 'Меню пустое, добавьте блюдо.';
+      }
+      document.getElementById('message2').innerHTML = resultHTML;
+    }
+
+  </script>
 </body>
 </html>

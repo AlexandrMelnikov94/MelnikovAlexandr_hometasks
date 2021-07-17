@@ -42,7 +42,8 @@ function AjaxStorage() {
         dataType: "json",
         data: {
           f: 'LOCKGET',
-          n: 'Melnikov', p: updatePassword
+          n: 'Melnikov',
+          p: updatePassword
         },
         cache: false,
         success: lockGetReady,
